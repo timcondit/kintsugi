@@ -2,6 +2,21 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## 0.1.0 - 2026-02-20
+#### Features
+- Add SVG export functionality - (6fefbc3) - Tim Condit
+- Add core modules for wabi-sabi drawing engine - (ad8ebaa) - Tim Condit
+#### Bug Fixes
+- Fix import order and mypy type errors - (cc3355e) - Tim Condit
+#### Documentation
+- Add changelog - (61e15f0) - Tim Condit
+#### Tests
+- Add tests for text and sketch modules - (144a54b) - Tim Condit
+#### Miscellaneous
+- Set up code quality infrastructure - (7484c1e) - Tim Condit
+
+- - -
+
 
 ## 0.1.0 - 2026-02-19
 #### Features
