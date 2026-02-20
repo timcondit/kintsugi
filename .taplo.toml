@@ -1,0 +1,22 @@
+# Taplo TOML formatter configuration
+
+include = ["**/*.toml"]
+exclude = [".gemini/**/*.toml"]
+
+[formatting]
+# Align entries vertically
+align_entries = false
+# Allow compact arrays and inline tables
+compact_arrays = true
+compact_inline_tables = false
+# Column width for wrapping
+column_width = 100
+# Indent with spaces
+indent_tables = false
+indent_entries = false
+# Reorder keys alphabetically
+reorder_keys = false
+# Reorder array items alphabetically
+reorder_arrays = true
+# Trailing comma for multi-line arrays
+trailing_newline = true

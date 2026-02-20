@@ -1,0 +1,23 @@
+from_latest_tag = true
+ignore_merge_commits = true
+ignore_fixup_commits = true
+disable_changelog = false
+disable_bump_commit = false
+branch_whitelist = ["feature/*", "main", "master"]
+pre_bump_hooks = ["just test-fast"]
+post_bump_hooks = []
+
+[changelog]
+path = "CHANGELOG.md"
+authors = []
+
+[commit_types]
+feat = { changelog_title = "Features", bump_minor = true }
+fix = { changelog_title = "Bug Fixes", bump_patch = true }
+perf = { changelog_title = "Performance", bump_patch = true }
+refactor = { changelog_title = "Refactoring", bump_patch = false }
+docs = { changelog_title = "Documentation", bump_patch = false }
+style = { changelog_title = "Styling", bump_patch = false }
+test = { changelog_title = "Tests", bump_patch = false }
+build = { changelog_title = "Build System", bump_patch = false }
+chore = { changelog_title = "Miscellaneous", bump_patch = false }

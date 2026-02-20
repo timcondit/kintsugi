@@ -1,0 +1,30 @@
+{
+  "$schema": "https://dprint.dev/schemas/v0.json",
+  "incremental": true,
+  "markdown": {
+    "lineWidth": 100,
+    "textWrap": "maintain"
+  },
+  "json": {
+    "lineWidth": 100,
+    "indentWidth": 2
+  },
+  "typescript": {
+    "lineWidth": 100,
+    "indentWidth": 2,
+    "quoteStyle": "preferDouble",
+    "semiColons": "asi"
+  },
+  "includes": ["**/*.{md,json,js,ts,jsx,tsx}"],
+  "excludes": [
+    "**/node_modules",
+    "**/*-lock.json",
+    "**/target",
+    ".gemini/**"
+  ],
+  "plugins": [
+    "https://plugins.dprint.dev/markdown-0.17.8.wasm",
+    "https://plugins.dprint.dev/json-0.19.4.wasm",
+    "https://plugins.dprint.dev/typescript-0.93.2.wasm"
+  ]
+}

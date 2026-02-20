@@ -1,0 +1,86 @@
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+repos:
+  # Ruff - Python linting and formatting
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.8.4
+    hooks:
+      - id: ruff
+        name: ruff lint
+        args: [--fix]
+      - id: ruff-format
+        name: ruff format
+
+  # TOML formatting and linting (taplo)
+  - repo: local
+    hooks:
+      - id: taplo-format
+        name: taplo format
+        entry: taplo
+        args: [format]
+        language: system
+        types: [toml]
+      - id: taplo-check
+        name: taplo check (lint)
+        entry: taplo
+        args: [check]
+        language: system
+        types: [toml]
+
+  # Markdown formatting (dprint)
+  - repo: local
+    hooks:
+      - id: dprint
+        name: dprint fmt
+        entry: dprint
+        args: [fmt]
+        language: system
+        types: [markdown]
+
+  # Python type checking (mypy)
+  - repo: local
+    hooks:
+      - id: mypy
+        name: mypy typecheck
+        entry: uv run mypy
+        args: [src/kintsugi]
+        language: system
+        pass_filenames: false
+        types: [python]
+        stages: [pre-commit]
+
+  # Doc scope enforcement — AGENTS.md vs CLAUDE.md boundary
+  - repo: local
+    hooks:
+      - id: check-doc-scope
+        name: check doc scope (AGENTS.md / CLAUDE.md)
+        entry: bash -c 'grep -qE "^## (Build Commands|Code Style|Naming Conventions|Git Conventions|Common Patterns|Test Markers)" CLAUDE.md && { echo "AGENTS.md heading found in CLAUDE.md -- move it to AGENTS.md"; grep -E "^## (Build Commands|Code Style|Naming Conventions|Git Conventions|Common Patterns|Test Markers)" CLAUDE.md; exit 1; }; grep -qE "^## (Product Vision|Design Principles|Interaction Philosophy|Key Implementation Notes|Design Tokens)" AGENTS.md && { echo "CLAUDE.md heading found in AGENTS.md -- move it to CLAUDE.md"; grep -E "^## (Product Vision|Design Principles|Interaction Philosophy|Key Implementation Notes|Design Tokens)" AGENTS.md; exit 1; }; exit 0'
+        language: system
+        pass_filenames: false
+        files: ^(AGENTS|CLAUDE)\.md$
+        stages: [pre-commit]
+
+  # Run fast tests
+  - repo: local
+    hooks:
+      - id: pytest-fast
+        name: pytest (fast tests only)
+        entry: uv run pytest
+        args:
+          - -m
+          - not slow
+          - -q
+        language: system
+        pass_filenames: false
+        types: [python]
+        stages: [pre-commit]
+
+  # Cocogitto - Conventional Commits validation (local since system-installed)
+  - repo: local
+    hooks:
+      - id: cocogitto-verify
+        name: verify conventional commit message
+        entry: cog
+        args: [verify, --file]
+        language: system
+        stages: [commit-msg]
