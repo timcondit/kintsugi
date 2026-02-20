@@ -5,8 +5,8 @@ Applies organic noise-based perturbation to lines and curves
 to create a hand-drawn aesthetic while preserving precision.
 """
 
-from dataclasses import dataclass
 import math
+from dataclasses import dataclass
 
 import numpy as np
 
@@ -27,11 +27,7 @@ def simplex_noise_2d(x: float, y: float, seed: int | None = None) -> float:
 
 
 def perturb_line(
-    x1: float,
-    y1: float,
-    x2: float,
-    y2: float,
-    config: SketchConfig,
+    x1: float, y1: float, x2: float, y2: float, config: SketchConfig
 ) -> list[tuple[float, float]]:
     """
     Apply wabi-sabi perturbation to a line segment.
@@ -58,29 +54,18 @@ def perturb_line(
         base_y = y1 + dy * t
 
         noise_val = simplex_noise_2d(
-            base_x * config.noise_scale + t,
-            base_y * config.noise_scale,
-            config.seed,
+            base_x * config.noise_scale + t, base_y * config.noise_scale, config.seed
         )
 
         offset = noise_val * config.noise_amplitude
 
-        points.append(
-            (
-                base_x + nx * offset,
-                base_y + ny * offset,
-            )
-        )
+        points.append((base_x + nx * offset, base_y + ny * offset))
 
     return points
 
 
 def perturb_circle(
-    cx: float,
-    cy: float,
-    radius: float,
-    config: SketchConfig,
-    num_points: int = 60,
+    cx: float, cy: float, radius: float, config: SketchConfig, num_points: int = 60
 ) -> list[tuple[float, float]]:
     """Apply wabi-sabi perturbation to a circle."""
     points = []
@@ -95,12 +80,7 @@ def perturb_circle(
 
         r = radius + noise_val * config.noise_amplitude
 
-        points.append(
-            (
-                cx + r * math.cos(angle),
-                cy + r * math.sin(angle),
-            )
-        )
+        points.append((cx + r * math.cos(angle), cy + r * math.sin(angle)))
 
     return points
 
@@ -112,20 +92,13 @@ class WabiSketch:
         self.config = config or SketchConfig()
 
     def sketch_line(
-        self,
-        x1: float,
-        y1: float,
-        x2: float,
-        y2: float,
+        self, x1: float, y1: float, x2: float, y2: float
     ) -> list[tuple[float, float]]:
         """Sketch a line with wabi-sabi effect."""
         return perturb_line(x1, y1, x2, y2, self.config)
 
     def sketch_circle(
-        self,
-        cx: float,
-        cy: float,
-        radius: float,
+        self, cx: float, cy: float, radius: float
     ) -> list[tuple[float, float]]:
         """Sketch a circle with wabi-sabi effect."""
         return perturb_circle(cx, cy, radius, self.config)
@@ -159,11 +132,6 @@ class WabiSketch:
 
             r = radius + noise_val * self.config.noise_amplitude
 
-            points.append(
-                (
-                    cx + r * math.cos(angle),
-                    cy + r * math.sin(angle),
-                )
-            )
+            points.append((cx + r * math.cos(angle), cy + r * math.sin(angle)))
 
         return points

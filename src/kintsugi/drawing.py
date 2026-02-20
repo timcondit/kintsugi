@@ -10,7 +10,6 @@ from decimal import Decimal
 from fractions import Fraction
 from typing import Literal
 
-
 PALETTE = {
     "ink": "#3a2a1a",
     "brown": "#6b3a1f",
@@ -114,71 +113,39 @@ class Drawing:
     labels: list[tuple[str, float, float, str]] = field(default_factory=list)
 
     def add_dimension(
-        self,
-        x1: float,
-        y1: float,
-        x2: float,
-        y2: float,
-        label: str = "",
+        self, x1: float, y1: float, x2: float, y2: float, label: str = ""
     ) -> "Drawing":
         """Add a dimension line."""
         self.dimensions.append(Dimension(x1, y1, x2, y2, label))
         return self
 
-    def add_callout(
-        self,
-        x: float,
-        y: float,
-        number: int,
-    ) -> "Drawing":
+    def add_callout(self, x: float, y: float, number: int) -> "Drawing":
         """Add a callout bubble."""
         self.callouts.append(Callout(x, y, number))
         return self
 
-    def add_hatch(
-        self,
-        x: float,
-        y: float,
-        width: float,
-        height: float,
-    ) -> "Drawing":
+    def add_hatch(self, x: float, y: float, width: float, height: float) -> "Drawing":
         """Add a hatch region."""
         self.hatches.append(HatchRegion(x, y, width, height))
         return self
 
-    def add_centerline(
-        self,
-        x1: float,
-        y1: float,
-        x2: float,
-        y2: float,
-    ) -> "Drawing":
+    def add_centerline(self, x1: float, y1: float, x2: float, y2: float) -> "Drawing":
         """Add a center line."""
         self.centerlines.append(CenterLine(x1, y1, x2, y2))
         return self
 
-    def add_sketch_path(
-        self,
-        path: list[tuple[float, float]],
-    ) -> "Drawing":
+    def add_sketch_path(self, path: list[tuple[float, float]]) -> "Drawing":
         """Add a wabi-sabi sketch path."""
         self.sketch_paths.append(path)
         return self
 
-    def add_text_path(
-        self,
-        path: list[tuple[float, float]],
-    ) -> "Drawing":
+    def add_text_path(self, path: list[tuple[float, float]]) -> "Drawing":
         """Add a text stroke path."""
         self.text_paths.append(path)
         return self
 
     def add_label(
-        self,
-        text: str,
-        x: float,
-        y: float,
-        style: str = "dimension",
+        self, text: str, x: float, y: float, style: str = "dimension"
     ) -> "Drawing":
         """Add a text label."""
         self.labels.append((text, x, y, style))

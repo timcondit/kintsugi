@@ -9,13 +9,13 @@ import math
 from ..drawing import (
     PALETTE,
     STROKE_HEAVY,
-    STROKE_MEDIUM,
     STROKE_LIGHT,
-    Drawing,
-    Dimension,
+    STROKE_MEDIUM,
     Callout,
-    HatchRegion,
     CenterLine,
+    Dimension,
+    Drawing,
+    HatchRegion,
 )
 
 
@@ -29,12 +29,7 @@ def _points_to_svg(points: list[tuple[float, float]]) -> str:
     return d
 
 
-def _arrow_head(
-    x: float,
-    y: float,
-    angle_deg: float,
-    size: float = 6.0,
-) -> str:
+def _arrow_head(x: float, y: float, angle_deg: float, size: float = 6.0) -> str:
     """Render a filled arrow head."""
     rad = math.radians(angle_deg)
     tip_x, tip_y = x, y

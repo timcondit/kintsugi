@@ -27,11 +27,7 @@ class CADEngine(ABC):
     """Abstract base class for CAD engines."""
 
     @abstractmethod
-    def project_3d_to_2d(
-        self,
-        part: Any,
-        view: str = "front",
-    ) -> Sketch:
+    def project_3d_to_2d(self, part: Any, view: str = "front") -> Sketch:
         """
         Project a 3D part to 2D sketch.
 
@@ -58,24 +54,18 @@ class CADEngine(ABC):
 class Build123dEngine(CADEngine):
     """build123d CAD engine implementation."""
 
-    def project_3d_to_2d(
-        self,
-        part: Any,
-        view: str = "front",
-    ) -> Sketch:
-        from build123d import Plane, Project
+    def project_3d_to_2d(self, part: Any, view: str = "front") -> Sketch:
+        from build123d import Plane, Project  # type: ignore[attr-defined]
 
-        plane = {
-            "front": Plane.XZ,
-            "side": Plane.YZ,
-            "top": Plane.XY,
-        }.get(view, Plane.XZ)
+        plane = {"front": Plane.XZ, "side": Plane.YZ, "top": Plane.XY}.get(
+            view, Plane.XZ
+        )
 
         projected = Project(part).do_sort_by_distance(plane)
 
-        lines = []
-        arcs = []
-        circles = []
+        lines: list[tuple[float, float, float, float]] = []
+        arcs: list[tuple[float, float, float, float, float]] = []
+        circles: list[tuple[float, float, float]] = []
 
         for edge in projected.edges:
             if hasattr(edge, "curve") and edge.curve:

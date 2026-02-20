@@ -1,6 +1,6 @@
 """Tests for kintsugi text module."""
 
-from kintsugi.text import HandTextRenderer, TextConfig, HersheyFont
+from kintsugi.text import HandTextRenderer, HersheyFont, TextConfig
 
 
 def test_text_renderer_default_config():

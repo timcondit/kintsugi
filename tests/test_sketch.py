@@ -1,6 +1,6 @@
 """Tests for kintsugi sketch module."""
 
-from kintsugi.sketch import WabiSketch, SketchConfig
+from kintsugi.sketch import SketchConfig, WabiSketch
 
 
 def test_wabisketch_default_config():
